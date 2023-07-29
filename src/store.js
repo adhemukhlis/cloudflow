@@ -1,6 +1,7 @@
 import { create } from 'zustand'
-import { applyNodeChanges, applyEdgeChanges } from 'reactflow'
+import { applyNodeChanges, applyEdgeChanges, getConnectedEdges } from 'reactflow'
 import { nanoid } from 'nanoid/non-secure'
+
 
 function calculateResult(type, data) {}
 
@@ -194,15 +195,15 @@ export const useStore = create((set, get) => ({
 		{
 			id: nanoid(),
 			data: parsedJSON,
-			type: 'example_node',
+			type: 'input_example_node',
 			position: { x: 0, y: 0 }
 		},
 		{
 			id: nanoid(),
 			data: {},
-			type: 'filter_node',
+			type: 'transform_filter_node',
 			position: { x: 200, y: 0 }
-		},
+		}
 	],
 	edges: [],
 	outputData: [],
@@ -217,16 +218,31 @@ export const useStore = create((set, get) => ({
 		})
 	},
 
+	addNode: ({ type }) => {
+		const id = `data${type}-${nanoid()}`
+		let data = [];
+		if(type === "input_example_node"){
+			data = parsedJSON
+		}
+		const newNode = {
+			id: id,
+			data: data,
+			tree: {
+				id: id,
+				children: []
+			},
+			type: type,
+			position: { x: 0, y: 0 }
+		}
+		set({ nodes: [...get().nodes, newNode] })
+	},
+
 	addEdge: (data) => {
 		const sourceNode = get().nodes.find((node) => node.id === data.source)
-
+		
 		const changedNodes = get().nodes.map((node) => {
 			if (node.id === data.target) {
 				node.data = sourceNode.data
-				if (node.type === 'output_node') {
-					console.log(sourceNode.data)
-					// set({outputData: [...sourceNode.data]});
-				}
 				return node
 			} else {
 				return node
@@ -235,5 +251,6 @@ export const useStore = create((set, get) => ({
 		const newEdge = { id: nanoid(6), animated: true, ...data }
 		set({ nodes: [...changedNodes] })
 		set({ edges: [...get().edges, newEdge] })
+		console.log(getConnectedEdges(get().nodes, get().edges))
 	}
 }))

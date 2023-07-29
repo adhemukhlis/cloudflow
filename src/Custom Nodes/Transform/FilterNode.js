@@ -1,11 +1,12 @@
 import React from "react";
 import { Handle, Position } from "reactflow";
-// import FilterListColumn from "../../components/FilterListColumn";
+import FilterListColumn from "../../components/Transform Nodes/FIlterListColumn";
 
 function FilterNode({ id, data }) {
   const onChangeSelect = (e) =>{
     console.log(e.target);
   }
+
   return (
     <div className="filter-data-node  cont-custom-node">
       <Handle
@@ -26,10 +27,9 @@ function FilterNode({ id, data }) {
                   {Object.entries(data).length === 0 ? (
                     <option value="empty">connect dataset...</option>
                   ) : (
-                    ""
-                    // <FilterListColumn needFilterData={data} />
+                    
+                    <FilterListColumn needFilterData={data} />
                   )}
-                  {/* <option value="Countries Indicators">Countries Indicators</option> */}
                 </select>
               </div>
               {Object.entries(data).length > 0 ? (
@@ -44,7 +44,7 @@ function FilterNode({ id, data }) {
                 " "
               )}
             </div>
-            {/* <button className="btn-node run-btn__filter-data-node">Run</button> */}
+            <button className="btn-node filter-data-node__run-btn">Run</button>
         </div>
       </div>
       <Handle
