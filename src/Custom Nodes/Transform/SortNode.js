@@ -70,15 +70,15 @@ function customSort(a, b, key, order) {
               <label htmlFor="indicators" className="label-for-input">Column name : </label>
               <div className="cont-indicators__detail-indicators-cont">
                 <select name="indicators" id="indicators" ref={selectColumnName} className="input-inside-node select-inside-node">
-                  {Object.entries(node.data.dataNow).length === 0 ? (
+                  {Object.entries(node.data.previousNodeData).length === 0 ? (
                     <option value="empty">connect dataset...</option>
                   ) : (
                     
-                    <FilterListColumn needFilterData={node.data.dataNow} />
+                    <FilterListColumn needFilterData={node.data.previousNodeData} />
                   )}
                 </select>
               </div>
-              {Object.entries(node.data.dataNow).length > 0 ? (
+              {Object.entries(node.data.previousNodeData).length > 0 ? (
                 <>
                   <label htmlFor="condition" className="label-for-input">Condition : </label>
                   <select name="condition" id="condition" className="input-inside-node select-inside-node" ref={selectSort} onChange={onChangeSelectOrder}>
