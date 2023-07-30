@@ -1,9 +1,9 @@
 import React from 'react'
 
 function FilterListColumn({ needFilterData }) {
-    
 
-	if (typeof needFilterData === 'object') {
+    console.log(needFilterData)
+	if ( (needFilterData.length > 0 || needFilterData[0]  !== undefined) && typeof needFilterData === 'object'   ) {
         const oneObjData = needFilterData[0];
         const objectKeys = Object.keys(oneObjData)
         

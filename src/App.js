@@ -6,6 +6,7 @@ import './App.css'
 import { useStore } from './store'
 import ExampleData from './Custom Nodes/Input/ExampleDataNode'
 import FilterNode from './Custom Nodes/Transform/FilterNode'
+import SortNode from './Custom Nodes/Transform/SortNode'
 import JsonTable from './components/JsonTable'
 import { useEffect, useRef } from 'react'
 import React from 'react';
@@ -28,20 +29,17 @@ const selector = (state) => ({
 
 const nodeTypes = {
 	input_example_node: ExampleData,
-	transform_filter_node: FilterNode
+	transform_filter_node: FilterNode,
+	transform_sort_node: SortNode
 }
 const nodeOrigin = [0.5, 0.5]
 function App() {
 	const { nodes, edges, onNodesChange, onEdgesChange, addEdge,addNode, outputData, addOutputData, removeOutputData } = useStore(selector, shallow);
-	console.log(outputData);
-	useEffect(() => {
-	  console.log(outputData)
 	
-
-	}, [outputData])
 
 	const onNodeClick = (e, node) => {
 		addOutputData(node.data.dataNow);
+		
 	}
 
 	const onPaneClick = () => {
@@ -63,6 +61,8 @@ function App() {
 		//Transform Node
 		if(element.getAttribute('data-testid') === "block-item-filter"){
 			addNode({type: 'transform_filter_node'})
+		}else if(element.getAttribute('data-testid') === "block-item-sort"){
+			addNode({type: 'transform_sort_node'})
 		}
 
 
@@ -185,7 +185,7 @@ function App() {
 										<div className="block-item__input-output-cont__input-text">Output: Dataset</div>
 									</div>
 								</div>
-								<div data-testid="block-item-sort" className="block-item css-u91er0">
+								<div data-testid="block-item-sort" className="block-item css-u91er0"  onClick={clickedModalBlock}>
 									<div className="block-item__title"> Sort</div>
 									<div className="block-item__sub-title">Sorts data based on a given column.</div>
 									<div className="block-item__input-output-cont">
