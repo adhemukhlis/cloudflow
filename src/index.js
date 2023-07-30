@@ -4,12 +4,21 @@ import './index.css'
 import App from '@/src/App'
 import reportWebVitals from './reportWebVitals'
 import { ReactFlowProvider } from 'reactflow'
+import { ConfigProvider, theme } from 'antd'
+import { StyleProvider } from '@ant-design/cssinjs'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
-	<ReactFlowProvider>
-		<App />
-	</ReactFlowProvider>
+	<StyleProvider hashPriority="high">
+		<ConfigProvider
+			theme={{
+				algorithm: theme.darkAlgorithm
+			}}>
+			<ReactFlowProvider>
+				<App />
+			</ReactFlowProvider>
+		</ConfigProvider>
+	</StyleProvider>
 )
 
 // If you want to start measuring performance in your app, pass a function
