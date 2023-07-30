@@ -1,7 +1,7 @@
 import React from 'react'
 
 function FilterListColumn({ needFilterData }) {
-
+    
 
 	if (typeof needFilterData === 'object') {
         const oneObjData = needFilterData[0];

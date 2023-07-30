@@ -7,7 +7,9 @@ import { useStore } from './store'
 import ExampleData from './Custom Nodes/Input/ExampleDataNode'
 import FilterNode from './Custom Nodes/Transform/FilterNode'
 import JsonTable from './components/JsonTable'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import React from 'react';
+import { Table } from 'antd';
 
 const logoImage = require('./resources/images/logo.png')
 
@@ -18,6 +20,10 @@ const selector = (state) => ({
 	onEdgesChange: state.onEdgesChange,
 	addEdge: state.addEdge,
 	addNode: state.addNode,
+	outputData: state.outputData,
+	
+	addOutputData: state.addOutputData,
+	removeOutputData: state.removeOutputData,
 })
 
 const nodeTypes = {
@@ -26,8 +32,22 @@ const nodeTypes = {
 }
 const nodeOrigin = [0.5, 0.5]
 function App() {
-	const { nodes, edges, onNodesChange, onEdgesChange, addEdge,addNode, outputData } = useStore(selector, shallow);
+	const { nodes, edges, onNodesChange, onEdgesChange, addEdge,addNode, outputData, addOutputData, removeOutputData } = useStore(selector, shallow);
+	console.log(outputData);
+	useEffect(() => {
+	  console.log(outputData)
+	
 
+	}, [outputData])
+
+	const onNodeClick = (e, node) => {
+		addOutputData(node.data.dataNow);
+	}
+
+	const onPaneClick = () => {
+		removeOutputData();
+	}
+	
 	/**
 	 * Function for clicked modal block
 	 * @param e Event from dom
@@ -249,6 +269,8 @@ function App() {
 					nodeTypes={nodeTypes}
 					nodeOrigin={nodeOrigin}
 					onConnect={addEdge}
+					onNodeClick={onNodeClick}
+					onPaneClick={onPaneClick}
 					fitView>
 					<Panel position="top-left">
 						<div className="block-btn" onClick={toggleOverlay}>
@@ -267,6 +289,9 @@ function App() {
 			<div className="output-logs-cont">
 				<div className="output-logs-cont__output-cont">
 					<h5 className="output-logs-cont__output-cont__title output-logs-title">OUTPUT</h5>
+					<div className="output-logs-cont__output-cont__output">
+					{outputData?.length !== 0  ? ( <JsonTable data={outputData} />) : ""}
+					</div>
 				</div>
 
 				<div className="output-logs-cont__logs-cont"> 
@@ -274,7 +299,7 @@ function App() {
 				</div>
 
 				{/* {console.log(outputData)} */}
-				{/* {outputData?.length !== 0  ? ( <JsonTable data={outputData} />) : ""} */}
+				
 			</div>
 		</div>
 	)
