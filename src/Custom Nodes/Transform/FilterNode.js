@@ -47,7 +47,7 @@ function FilterNode(node) {
 		} else if (selectCondition.current.value === 'text-is-not-exactly') {
 			const filteredData = node.data.previousNodeData.filter((obj) => {
 				return String(obj[selectColumnName.current.value]) !== inputSelectCondition.current.value
-			}) 
+			})
 
 			updateDataNode(node.id, filteredData)
 		} else if (selectCondition.current.value === 'number-equals') {
@@ -71,14 +71,13 @@ function FilterNode(node) {
 		} else if (selectCondition.current.value === 'number-is-less-than') {
 			const filteredData = node.data.previousNodeData.filter((obj) => {
 				return obj[selectColumnName.current.value] < inputSelectCondition.current.value
-
-      }) 
+			})
 
 			updateDataNode(node.id, filteredData)
 		} else if (selectCondition.current.value === 'number-is-less-than-or-equals') {
 			const filteredData = node.data.previousNodeData.filter((obj) => {
 				return obj[selectColumnName.current.value] <= inputSelectCondition.current.value
-      }) 
+			})
 
 			updateDataNode(node.id, filteredData)
 		} else {
