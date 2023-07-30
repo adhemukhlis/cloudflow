@@ -16,7 +16,7 @@ const JsonTable = ({ data }) => {
         {data.map((item, index) => (
           <tr key={index}>
             {Object.values(item).map((value, idx) => (
-              <td key={idx}>{value}</td>
+              <td key={idx}> {typeof value === 'string' ? value : value?.toLocaleString('de')}</td>
             ))}
           </tr>
         ))}

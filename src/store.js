@@ -193,22 +193,7 @@ const parsedJSON = JSON.parse(JSON.stringify(jsonCountries))
 const inputExampleId = `input_example_${nanoid()}`;
 export const useStore = create((set, get) => ({
 
-	nodes: [
-		{
-			id: inputExampleId,
-			data: {dataNow: parsedJSON},
-			type: 'input_example_node',
-			position: { x: 0, y: 0 }
-		},
-		{
-			id: nanoid(),
-			data: {dataNow: [], previousNodeData: [],},
-			previousNode: inputExampleId,
-
-			type: 'transform_filter_node',
-			position: { x: 500, y: 0 }
-		}
-	],
+	nodes: [],
 	edges: [],
 	inputData: [
 	],
@@ -223,8 +208,8 @@ export const useStore = create((set, get) => ({
 		// set({out})
 		set({nodes: [...nodes], outputData: [...data]});
 	},
-	addOutputData: data =>{
-		
+	addOutputData: async data =>{
+		await new Promise(resolve => setTimeout(resolve, 1000));
 		set({outputData: data});
 		// console.log(get().outputData);
 	},
@@ -259,7 +244,7 @@ export const useStore = create((set, get) => ({
 		}
 		const newNode = {
 			id: id,
-			data:{dataNow: data, 			previousNodeData: [],} ,
+			data:{dataNow: data, previousNodeData: [],} ,
 			previousNode: '',
 			tree: {
 				id: id,
@@ -288,17 +273,18 @@ export const useStore = create((set, get) => ({
 				node.data.dataNow = sourceNode.data.dataNow;
 				node.data.previousNodeData = sourceNode.data.dataNow;
 				node.previousNode = sourceNode.id
-				console.log('node');
+				// console.log('node');
 				console.log(node);
 				return node
 			} else {
 				return node
 			}
 		})
-		console.log(get().nodes);
+		// console.log(changedNodes)
+		// console.log(get().nodes);
 		const newEdge = { id: nanoid(6), animated: true, ...data }
 		set({ nodes: [...changedNodes] })
 		set({ edges: [...get().edges, newEdge] })
-		console.log(getConnectedEdges(get().nodes, get().edges))
+		// console.log(getConnectedEdges(get().nodes, get().edges))
 	}
 }))
