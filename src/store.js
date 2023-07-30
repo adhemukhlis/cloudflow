@@ -208,8 +208,8 @@ export const useStore = create((set, get) => ({
 		// set({out})
 		set({nodes: [...nodes], outputData: [...data]});
 	},
-	addOutputData: data =>{
-		
+	addOutputData: async data =>{
+		await new Promise(resolve => setTimeout(resolve, 1000));
 		set({outputData: data});
 		// console.log(get().outputData);
 	},

@@ -35,15 +35,11 @@ const nodeTypes = {
 const nodeOrigin = [0.5, 0.5]
 function App() {
 	const { nodes, edges, onNodesChange, onEdgesChange, addEdge,addNode, outputData, addOutputData, removeOutputData } = useStore(selector, shallow);
-	console.log(outputData);
-	useEffect(() => {
-	  console.log(outputData)
 	
-
-	}, [outputData])
 
 	const onNodeClick = (e, node) => {
 		addOutputData(node.data.dataNow);
+		
 	}
 
 	const onPaneClick = () => {
