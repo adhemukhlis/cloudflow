@@ -19,52 +19,37 @@ function FilterNode(node)  {
   const inputSelectCondition = useRef(null);
   const selectColumnName = useRef(null);
   const selectCondition = useRef(null);
-  console.log(node)
-  // console.log(node.previousNodeData);
   const onClickedRun = e => {
-    // console.log(data);
     let filteredData = [];
     if(selectCondition.current.value === "data-not-null"){
-      console.log(selectColumnName.current.value)
       const filteredData = node.data.previousNodeData.filter(obj => {
         return obj[selectColumnName.current.value] !== null
       });
-      console.log(filteredData);
 
       updateDataNode(node.id, filteredData)
     }else if(selectCondition.current.value === "text-is-exactly"){
-      console.log(selectColumnName.current.value)
       const filteredData = node.data.previousNodeData.filter(obj => {
         return obj[selectColumnName.current.value] === inputSelectCondition.current.value;
       });
-      console.log(filteredData);
 
       updateDataNode(node.id, filteredData)
     }else if(selectCondition.current.value === "text-is-includes"){
-    console.log(selectColumnName.current.value)
     const filteredData = node.data.previousNodeData.filter(obj => {
-      // console.log(obj[selectColumnName.current.value]);
       return String(obj[selectColumnName.current.value])?.includes(inputSelectCondition.current.value);
     });
-    console.log(filteredData);
 
     updateDataNode(node.id, filteredData)
   }else if(selectCondition.current.value === "text-does-not-includes"){
-    console.log(selectColumnName.current.value)
     const filteredData = node.data.previousNodeData.filter(obj => {
-      // console.log(obj[selectColumnName.current.value]);
       return !String(obj[selectColumnName.current.value])?.includes(inputSelectCondition.current.value);
     });
-    console.log(filteredData);
 
     updateDataNode(node.id, filteredData)
   }
   else if(selectCondition.current.value === "text-is-not-exactly"){
     const filteredData = node.data.previousNodeData.filter(obj => {
-      // console.log(obj[selectColumnName.current.value]);
       return String(obj[selectColumnName.current.value]) !== inputSelectCondition.current.value;
     });
-    console.log(filteredData);
 
     updateDataNode(node.id, filteredData)
   }else{
@@ -72,7 +57,6 @@ function FilterNode(node)  {
     }
   }
   const onChangeSelectCondition = (e) =>{
-    console.log(e.target.value);
     if((e.target.value === "select-condition") || (e.target.value === "data-not-null")){
       setIsShowInput(false);
     } else{
