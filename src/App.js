@@ -7,8 +7,9 @@ import { useStore } from './store'
 import ExampleData from './Custom Nodes/Input/ExampleDataNode'
 import FilterNode from './Custom Nodes/Transform/FilterNode'
 import JsonTable from './components/JsonTable'
-import { useRef, useEffect } from 'react'
-import { Table } from 'antd'
+import { useEffect, useRef } from 'react'
+import React from 'react';
+import { Table } from 'antd';
 
 const logoImage = require('./resources/images/logo.png')
 
@@ -18,7 +19,11 @@ const selector = (state) => ({
 	onNodesChange: state.onNodesChange,
 	onEdgesChange: state.onEdgesChange,
 	addEdge: state.addEdge,
-	addNode: state.addNode
+	addNode: state.addNode,
+	outputData: state.outputData,
+	
+	addOutputData: state.addOutputData,
+	removeOutputData: state.removeOutputData,
 })
 
 const nodeTypes = {
@@ -27,31 +32,46 @@ const nodeTypes = {
 }
 const nodeOrigin = [0.5, 0.5]
 function App() {
-	const { nodes, edges, onNodesChange, onEdgesChange, addEdge, addNode, outputData } = useStore(selector, shallow)
+	const { nodes, edges, onNodesChange, onEdgesChange, addEdge,addNode, outputData, addOutputData, removeOutputData } = useStore(selector, shallow);
+	console.log(outputData);
+	useEffect(() => {
+	  console.log(outputData)
+	
 
+	}, [outputData])
+
+	const onNodeClick = (e, node) => {
+		addOutputData(node.data.dataNow);
+	}
+
+	const onPaneClick = () => {
+		removeOutputData();
+	}
+	
 	/**
 	 * Function for clicked modal block
 	 * @param e Event from dom
 	 */
-	const clickedModalBlock = (e) => {
+	const clickedModalBlock = (e) =>{
 		//Input node
-		const element = e.target.closest('.block-item')
+		const element = e.target.closest('.block-item');
 		console.log(element.getAttribute('data-testid'))
-		if (element.getAttribute('data-testid') === 'block-item-exampledata') {
-			addNode({ type: 'input_example_node' })
+		if(element.getAttribute('data-testid') === "block-item-exampledata"){
+			addNode({type: 'input_example_node'});
 		}
 
 		//Transform Node
-		if (element.getAttribute('data-testid') === 'block-item-filter') {
-			addNode({ type: 'transform_filter_node' })
+		if(element.getAttribute('data-testid') === "block-item-filter"){
+			addNode({type: 'transform_filter_node'})
 		}
 
-		toggleOverlay() //for turn off the overlay and modal
+
+		toggleOverlay(); //for turn off the overlay and modal
 	}
 
-	const overlayEl = useRef(null)
-	const modalEl = useRef(null)
-	const buttonCloseOverlay = useRef(null)
+	const overlayEl = useRef(null);
+	const modalEl = useRef(null);
+	const buttonCloseOverlay = useRef(null);
 	const toggleOverlay = () => {
 		const overlayDisplay = getComputedStyle(overlayEl.current).display
 		const modalDisplay = getComputedStyle(modalEl.current).display
@@ -64,31 +84,6 @@ function App() {
 	const toggleOverlayForCloseBtn = (e) => {
 		toggleOverlay()
 	}
-	useEffect(() => {
-		console.log(nodes[0].data)
-	}, [])
-	const columns = [
-		{
-			title: 'country',
-			dataIndex: 'country',
-			key: 'country'
-		},
-		{
-			title: 'life_expectancy',
-			dataIndex: 'life_expectancy',
-			key: 'life_expectancy'
-		},
-		{
-			title: 'population',
-			dataIndex: 'population',
-			key: 'population'
-		},
-		{
-			title: 'income',
-			dataIndex: 'income',
-			key: 'income'
-		}
-	]
 	return (
 		<div className="app">
 			<div className="overlay" ref={overlayEl} onClick={toggleOverlayForBlockBtnOrOverlayEl}></div>
@@ -113,7 +108,7 @@ function App() {
 						<div className="detail__contents__block-cont-node">
 							<h4 className="contents__block-cont-input-node__title block-cont-node__title">Input</h4>
 							<div className="block-cont-input-node__blocks-cont blocks-cont">
-								<div data-testid="block-item-file" className="block-item">
+								<div data-testid="block-item-file" className="block-item" >
 									<div className="block-item__title">File</div>
 									<div className="block-item__sub-title">Handles csv, json, geojson or topojson files.</div>
 									<div className="block-item__input-output-cont">
@@ -274,6 +269,8 @@ function App() {
 					nodeTypes={nodeTypes}
 					nodeOrigin={nodeOrigin}
 					onConnect={addEdge}
+					onNodeClick={onNodeClick}
+					onPaneClick={onPaneClick}
 					fitView>
 					<Panel position="top-left">
 						<div className="block-btn" onClick={toggleOverlay}>
@@ -292,23 +289,17 @@ function App() {
 			<div className="output-logs-cont">
 				<div className="output-logs-cont__output-cont">
 					<h5 className="output-logs-cont__output-cont__title output-logs-title">OUTPUT</h5>
-					{/* {nodes[0].data?.length !== 0 ? <JsonTable data={nodes[0].data} /> : ''} */}
-					<Table
-						dataSource={nodes[0].data}
-						columns={columns}
-						pagination={{ position: ['none'] }}
-						scroll={{
-							y: 240
-						}}
-					/>
+					<div className="output-logs-cont__output-cont__output">
+					{outputData?.length !== 0  ? ( <JsonTable data={outputData} />) : ""}
+					</div>
 				</div>
 
-				<div className="output-logs-cont__logs-cont">
+				<div className="output-logs-cont__logs-cont"> 
 					<h5 className="output-logs-cont__output-cont__title output-logs-title">LOGS</h5>
 				</div>
 
 				{/* {console.log(outputData)} */}
-				{/* {nodes[0].data?.length !== 0  ? ( <JsonTable data={nodes[0].data} />) : ""} */}
+				
 			</div>
 		</div>
 	)
