@@ -12,7 +12,7 @@ root.render(
 	<StyleProvider hashPriority="high">
 		<ConfigProvider
 			theme={{
-				algorithm: theme.darkAlgorithm
+				algorithm: theme.lightAlgorithm
 			}}>
 			<ReactFlowProvider>
 				<App />

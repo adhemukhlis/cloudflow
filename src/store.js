@@ -21,27 +21,17 @@ export const useStore = create((set, get) => ({
 			} 
 			return node;
 		})
-		// set({out})
 		set({nodes: [...nodes], outputData: [...data]});
 	},
 	addOutputData: async data =>{
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		// await new Promise(resolve => setTimeout(resolve, 1000));
 		set({outputData: data});
-		// console.log(get().outputData);
 	},
 	removeOutputData: () => {
 		set({ outputData: [] })
 	},
 	onNodesChange: (changes) => {
-		// if(changes[0].type === "position"){
-		// 	const node = get().nodes.find(node => node.id === changes[0].id);
-		// 	// console.log(node);
-		// 	set({outputData: node?.data});
-		// 	console.log(node);
-		// }
-		// // console.log(changes.id);
-		// // console.log(changes);
-
+		
 		set({
 			nodes: applyNodeChanges(changes, get().nodes)
 		})
@@ -87,8 +77,6 @@ export const useStore = create((set, get) => ({
 				node.data.dataNow = sourceNode.data.dataNow;
 				node.data.previousNodeData = sourceNode.data.dataNow;
 				node.previousNode = sourceNode.id
-				// console.log('node');
-				console.log(node);
 				return node
 			} else {
 				return node

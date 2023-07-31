@@ -1,6 +1,8 @@
 import { shallow } from 'zustand/shallow'
 
 import { ReactFlow, Panel, Background, MiniMap, Controls } from 'reactflow'
+import CsvUploadNode from './Custom Nodes/Input/CsvUploadNode'
+
 import 'reactflow/dist/style.css'
 import './App.css'
 import { useStore } from './store'
@@ -11,6 +13,7 @@ import React from 'react'
 import { Table } from 'antd'
 import { ENUM_NODE } from './enums'
 import ButtonAddBlock from './components/ButtonAddBlock'
+
 const logoImage = require('./resources/images/logo.png')
 
 const selector = (state) => ({
@@ -27,7 +30,8 @@ const selector = (state) => ({
 const nodeTypes = {
 	[ENUM_NODE.EXAMPLE_DATASET]: ExampleData,
 	[ENUM_NODE.FILTER]: FilterNode,
-	[ENUM_NODE.SORT]: SortNode
+	[ENUM_NODE.SORT]: SortNode,
+	[ENUM_NODE.CSV_UPLOAD]: CsvUploadNode, 
 }
 const nodeOrigin = [0.5, 0.5]
 function App() {
@@ -94,8 +98,8 @@ function App() {
 						<ButtonAddBlock />
 					</Panel>
 					<Background />
-					<MiniMap className="" maskColor="#201f34" nodeColor="#333154" />
-					<Controls style={{ backgroundColor: '#1a192b' }} />
+					<MiniMap className="" maskColor="#F1F2F4" nodeColor="#F7F8F9" />
+					<Controls style={{ backgroundColor: '#F7F8F9' }} />
 				</ReactFlow>
 			</div>
 			<div className="output-logs-cont">
