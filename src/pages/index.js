@@ -1,20 +1,22 @@
+'use client'
 import { shallow } from 'zustand/shallow'
 
 import { ReactFlow, Panel, Background, MiniMap, Controls } from 'reactflow'
-import CsvUploadNode from './Custom Nodes/Input/CsvUploadNode'
 
-import 'reactflow/dist/style.css'
-import './App.css'
-import { useStore } from './store'
-import ExampleData from './Custom Nodes/Input/ExampleDataNode'
-import FilterNode from './Custom Nodes/Transform/FilterNode'
-import SortNode from './Custom Nodes/Transform/SortNode'
 import React from 'react'
+// import dynamic from 'next/dynamic'
 import { Table } from 'antd'
-import { ENUM_NODE } from './enums'
-import ButtonAddBlock from './components/ButtonAddBlock'
+import SortNode from '@/components/CustomNodes/Transform/SortNode'
+import FilterNode from '@/components/CustomNodes/Transform/FilterNode'
+import ExampleData from '@/components/CustomNodes/Input/ExampleDataNode'
+import { useStore } from '@/store'
+import CsvUploadNode from '@/components/CustomNodes/Input/CsvUploadNode'
+import { ENUM_NODE } from '@/enums'
+import ButtonAddBlock from '@/components/ButtonAddBlock'
 
-const logoImage = require('./resources/images/logo.png')
+// import routeGuard from '@/utils/route-guard'
+// import { withSession } from '@/utils/session-wrapper'
+import 'reactflow/dist/style.css'
 
 const selector = (state) => ({
 	nodes: state.nodes,
@@ -31,10 +33,10 @@ const nodeTypes = {
 	[ENUM_NODE.EXAMPLE_DATASET]: ExampleData,
 	[ENUM_NODE.FILTER]: FilterNode,
 	[ENUM_NODE.SORT]: SortNode,
-	[ENUM_NODE.CSV_UPLOAD]: CsvUploadNode, 
+	[ENUM_NODE.CSV_UPLOAD]: CsvUploadNode
 }
 const nodeOrigin = [0.5, 0.5]
-function App() {
+const Index = () => {
 	const { nodes, edges, onNodesChange, onEdgesChange, addEdge, outputData, addOutputData, removeOutputData } = useStore(
 		selector,
 		shallow
@@ -75,7 +77,7 @@ function App() {
 			<div className="header-app-cont">
 				<div className="header-app-cont__left-menu">
 					<a href="#" className="header-app-cont__left-menu__anchor">
-						<img src={logoImage} alt="image-logo" className="header-app-cont__header-app-cont__img-logo" />
+						<img src="/assets/images/logo.png" alt="image-logo" className="header-app-cont__header-app-cont__img-logo" />
 					</a>
 				</div>
 				<div className="header-app-cont__title-app">
@@ -128,5 +130,13 @@ function App() {
 		</div>
 	)
 }
-
-export default App
+export default Index
+// export const getServerSideProps = withSession(async function ({ req, query, ...other }) {
+// 	const access_token = req.session?.auth?.access_token
+// 	const isLoggedIn = !!access_token
+// 	return routeGuard([isLoggedIn], '/login', {
+// 		props: {
+// 			username: req.session?.auth?.username
+// 		}
+// 	})
+// })

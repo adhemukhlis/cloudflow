@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react'
 import { Handle, Position } from 'reactflow'
 
-
 function CsvUploadNode({ id, data }) {
 	const inputEl = useRef(null)
 
@@ -31,7 +30,6 @@ function CsvUploadNode({ id, data }) {
 		const file = e.dataTransfer.files[0]
 		setFile(file)
 	}
-	
 
 	const handleFileInputChange = (e) => {
 		setFile(file)
@@ -49,32 +47,29 @@ function CsvUploadNode({ id, data }) {
 					<div className="close">X</div>
 				</div>
 				<div className="input-file-node__input-file-cont">
-				{!file ? (
-					<>
-					<div className="input-file-cont__drop-and-file-dialog-cont">
-							<p className="drop-and-file-dialog-cont__drop-file-text">
-								Drop the file here or
-							</p>
-							<button className="drop-and-file-dialog-cont__open-file-dialog-btn" onClick={() => inputEl.current.click()}>
-								Open File Dialog
-							</button>
-						</div>
-						<input
-							name="file"
-							type="file"
-							accept=".csv"
-							id="file"
-							className="input-file-cont__input-el"
-							ref={inputEl}
-							onChange={handleFileInputChange}
-						/>
-						<span className="label-for-input">Allowed Types: csv</span>
-					</>
-						
-				) : (
-					<p>{file?.name}</p>
-				)}
-					</div>
+					{!file ? (
+						<>
+							<div className="input-file-cont__drop-and-file-dialog-cont">
+								<p className="drop-and-file-dialog-cont__drop-file-text">Drop the file here or</p>
+								<button className="drop-and-file-dialog-cont__open-file-dialog-btn" onClick={() => inputEl.current.click()}>
+									Open File Dialog
+								</button>
+							</div>
+							<input
+								name="file"
+								type="file"
+								accept=".csv"
+								id="file"
+								className="input-file-cont__input-el"
+								ref={inputEl}
+								onChange={handleFileInputChange}
+							/>
+							<span className="label-for-input">Allowed Types: csv</span>
+						</>
+					) : (
+						<p>{file?.name}</p>
+					)}
+				</div>
 			</div>
 			<Handle
 				className="handle__input-file-node handle-right-custom-node"

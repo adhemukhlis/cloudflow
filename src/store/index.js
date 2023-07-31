@@ -1,12 +1,12 @@
 import { create } from 'zustand'
-import { applyNodeChanges, applyEdgeChanges, getConnectedEdges } from 'reactflow'
+import { applyNodeChanges, applyEdgeChanges } from 'reactflow'
 import { customAlphabet } from 'nanoid'
 
 // use custom alphabet for reason avoiding identifier symbol like (_-;+,)
 const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 64)
 
-import CountriesData from './sample-data/countries.json'
-import { ENUM_NODE } from './enums'
+import CountriesData from '@/sample-data/countries.json'
+import { ENUM_NODE } from '@/enums'
 
 const parsedJSON = JSON.parse(JSON.stringify(CountriesData))
 export const useStore = create((set, get) => ({
@@ -14,24 +14,23 @@ export const useStore = create((set, get) => ({
 	edges: [],
 	inputData: [],
 	outputData: [],
-	updateDataNode: (id, data) =>{
-		const nodes = get().nodes.map(node =>{
-			if(node.id === id){
-				node.data.dataNow = data;
-			} 
-			return node;
+	updateDataNode: (id, data) => {
+		const nodes = get().nodes.map((node) => {
+			if (node.id === id) {
+				node.data.dataNow = data
+			}
+			return node
 		})
-		set({nodes: [...nodes], outputData: [...data]});
+		set({ nodes: [...nodes], outputData: [...data] })
 	},
-	addOutputData: async data =>{
+	addOutputData: async (data) => {
 		// await new Promise(resolve => setTimeout(resolve, 1000));
-		set({outputData: data});
+		set({ outputData: data })
 	},
 	removeOutputData: () => {
 		set({ outputData: [] })
 	},
 	onNodesChange: (changes) => {
-		
 		set({
 			nodes: applyNodeChanges(changes, get().nodes)
 		})
@@ -74,8 +73,8 @@ export const useStore = create((set, get) => ({
 		}
 		const changedNodes = get().nodes.map((node) => {
 			if (node.id === data.target) {
-				node.data.dataNow = sourceNode.data.dataNow;
-				node.data.previousNodeData = sourceNode.data.dataNow;
+				node.data.dataNow = sourceNode.data.dataNow
+				node.data.previousNodeData = sourceNode.data.dataNow
 				node.previousNode = sourceNode.id
 				return node
 			} else {

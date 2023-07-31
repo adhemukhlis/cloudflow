@@ -1,9 +1,6 @@
 import Icon from '@ant-design/icons'
-import SVG from 'react-inlinesvg'
-import Grid_2Plus from './grid-2-plus.svg'
-import Plus from './plus.svg'
+import Grid_2Plus from './icon-grid-2-plus'
+import Plus from './icon-plus'
 
-export const IconGrid_2Plus = (props) => (
-	<Icon component={(iProps) => <SVG src={Grid_2Plus} {...iProps} />} {...props} />
-)
-export const IconPlus = (props) => <Icon component={(iProps) => <SVG src={Plus} {...iProps} />} {...props} />
+export const IconGrid_2Plus = (props) => <Icon component={Grid_2Plus} {...props} />
+export const IconPlus = (props) => <Icon component={Plus} {...props} />

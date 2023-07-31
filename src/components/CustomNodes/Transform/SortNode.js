@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
-import { Handle, Position, useStoreApi } from 'reactflow'
-import FilterListColumn from '../../components/Transform Nodes/FIlterListColumn'
+import { Handle, Position } from 'reactflow'
 import { shallow } from 'zustand/shallow'
-import { useStore } from '../../store'
+import FilterListColumn from '../../Transform Nodes/FIlterListColumn'
+import { useStore } from '../../../store'
 const selector = (state) => ({
 	outputData: state.outputData,
 	inputData: state.inputData,
