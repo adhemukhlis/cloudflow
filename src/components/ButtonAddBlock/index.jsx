@@ -35,7 +35,19 @@ const BLOCK_LIST = [
 		description: 'Sorts data based on a given column.',
 		inputTypes: ['dataset'],
 		outputTypes: ['dataset']
-	}
+	},
+	{
+		id: 4,
+		nodeEnum: ENUM_NODE.CSV_UPLOAD,
+		label: 'File',
+		type: 'input',
+		description: 'Handle CSV files',
+		inputTypes: ['-'],
+		outputTypes: ['dataset']
+	},
+
+
+	
 ]
 const BLOCK_CATEGORY = uniq(BLOCK_LIST.map((item) => item.type)).map((item) => ({ value: item, label: upper(item) }))
 const selector = (state) => ({

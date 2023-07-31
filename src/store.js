@@ -14,32 +14,24 @@ export const useStore = create((set, get) => ({
 	edges: [],
 	inputData: [],
 	outputData: [],
-	updateDataNode: (id, data) => {
-		const nodes = get().nodes.map((node) => {
-			if (node.id === id) {
-				node.data.dataNow = data
-			}
-			return node
+	updateDataNode: (id, data) =>{
+		const nodes = get().nodes.map(node =>{
+			if(node.id === id){
+				node.data.dataNow = data;
+			} 
+			return node;
 		})
-		set({ nodes: [...nodes], outputData: [...data] })
+		set({nodes: [...nodes], outputData: [...data]});
 	},
-	addOutputData: async (data) => {
-		await new Promise((resolve) => setTimeout(resolve, 1000))
-		set({ outputData: data })
+	addOutputData: async data =>{
+		// await new Promise(resolve => setTimeout(resolve, 1000));
+		set({outputData: data});
 	},
 	removeOutputData: () => {
 		set({ outputData: [] })
 	},
 	onNodesChange: (changes) => {
-		// if(changes[0].type === "position"){
-		// 	const node = get().nodes.find(node => node.id === changes[0].id);
-		// 	// console.log(node);
-		// 	set({outputData: node?.data});
-		// 	console.log(node);
-		// }
-		// // console.log(changes.id);
-		// // console.log(changes);
-
+		
 		set({
 			nodes: applyNodeChanges(changes, get().nodes)
 		})
@@ -82,8 +74,8 @@ export const useStore = create((set, get) => ({
 		}
 		const changedNodes = get().nodes.map((node) => {
 			if (node.id === data.target) {
-				node.data.dataNow = sourceNode.data.dataNow
-				node.data.previousNodeData = sourceNode.data.dataNow
+				node.data.dataNow = sourceNode.data.dataNow;
+				node.data.previousNodeData = sourceNode.data.dataNow;
 				node.previousNode = sourceNode.id
 				return node
 			} else {
