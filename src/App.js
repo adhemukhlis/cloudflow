@@ -98,7 +98,7 @@ function App() {
 						<ButtonAddBlock />
 					</Panel>
 					<Background />
-					<MiniMap className="" maskColor="#F1F2F4" nodeColor="#F7F8F9" />
+					<MiniMap className="" maskColor="#F1F2F4" nodeColor="#DCDFE4" />
 					<Controls style={{ backgroundColor: '#F7F8F9' }} />
 				</ReactFlow>
 			</div>
