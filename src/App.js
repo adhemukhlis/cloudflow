@@ -9,7 +9,7 @@ import { useStore } from './store'
 import ExampleData from './Custom Nodes/Input/ExampleDataNode'
 import FilterNode from './Custom Nodes/Transform/FilterNode'
 import SortNode from './Custom Nodes/Transform/SortNode'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Table } from 'antd'
 import { ENUM_NODE } from './enums'
 import ButtonAddBlock from './components/ButtonAddBlock'
@@ -24,7 +24,8 @@ const selector = (state) => ({
 	addEdge: state.addEdge,
 	outputData: state.outputData,
 	addOutputData: state.addOutputData,
-	removeOutputData: state.removeOutputData
+	removeOutputData: state.removeOutputData,
+	addNode: state.addNode
 })
 
 const nodeTypes = {
@@ -35,10 +36,63 @@ const nodeTypes = {
 }
 const nodeOrigin = [0.5, 0.5]
 function App() {
-	const { nodes, edges, onNodesChange, onEdgesChange, addEdge, outputData, addOutputData, removeOutputData } = useStore(
+	const { nodes, edges, addNode, onNodesChange, onEdgesChange, addEdge, outputData, addOutputData, removeOutputData } = useStore(
 		selector,
 		shallow
 	)
+
+	/**
+	 * For future feature but not yet implemented : 
+	 */
+
+	//   useEffect(() => {
+	// 	// Add event listeners when the component mounts
+	// 	document.addEventListener('dragover',  (e) => {
+	// 		const dropTarget = document.querySelector(' .react-flow__background');
+	// 		if (dropTarget.closest(' .react-flow__background')) {
+	// 			e.preventDefault()
+	// 			// console.log(e)
+	// 		}
+			
+	 		 
+	// 	});
+	// 	document.addEventListener('drop',  (e) =>{
+	// 		const dropTarget = document.querySelector(' .react-flow__background');
+	// 		if (dropTarget.closest(' .react-flow__background')) {
+	// 			e.preventDefault()
+	// 			console.log(e)
+	// 		}
+			
+	 		 
+	// 	});
+	
+	// 	// Remove event listeners when the component unmounts
+	// 	return () => {
+	// 	  document.removeEventListener('dragover',  (e) => {
+	// 		const dropTarget = document.querySelector(' .react-flow__background');
+	// 		if (dropTarget.closest(' .react-flow__background')) {
+	// 			e.preventDefault()
+	// 		}
+			
+	 		 
+	// 	});
+	// 	  document.removeEventListener('drop',  (e) =>{
+	// 		const dropTarget = document.querySelector(' .react-flow__background');
+	// 		if (dropTarget.closest(' .react-flow__background')) {
+	// 			e.preventDefault()
+	// 			console.log(e)
+	// 		}
+			
+	 		 
+	// 	});
+	// 	};
+	//   }, []);
+	// const onDropBackground = (e)=>{
+	// 	e.preventDefault();
+	// 	const file = e.dataTransfers?.files[0];
+	// 	console.log(e);
+	// 	// addNode({type: ENUM_NODE.CSV_UPLOAD, fileName: file.name});
+	// }
 	const onNodeClick = (e, node) => {
 		console.log('node', node)
 		addOutputData(node.data.dataNow)
@@ -93,6 +147,7 @@ function App() {
 					onConnect={addEdge}
 					onNodeClick={onNodeClick}
 					onPaneClick={onPaneClick}
+				
 					fitView>
 					<Panel position="top-left">
 						<ButtonAddBlock />

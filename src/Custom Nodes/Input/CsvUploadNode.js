@@ -1,8 +1,18 @@
 import React, { useRef, useState } from 'react'
 import { Handle, Position } from 'reactflow'
+import { shallow } from 'zustand/shallow'
+import { useStore } from '../../store'
 
+const selector = (state) => ({
+
+	updateNodeByKey: state.updateNodeByKey
+})
 
 function CsvUploadNode({ id, data }) {
+	const { updateNodeByKey } = useStore(
+		selector,
+		shallow
+	)
 	const inputEl = useRef(null)
 
 	const [file, setFile] = useState(null)
@@ -35,6 +45,7 @@ function CsvUploadNode({ id, data }) {
 
 	const handleFileInputChange = (e) => {
 		setFile(file)
+		updateNodeByKey({id: id, key: 'fileName',data: file.name });
 	}
 	return (
 		<div
@@ -72,7 +83,7 @@ function CsvUploadNode({ id, data }) {
 					</>
 						
 				) : (
-					<p>{file?.name}</p>
+					<p>{file?.name || data?.fileName}</p>
 				)}
 					</div>
 			</div>

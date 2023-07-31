@@ -7,6 +7,7 @@ const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLM
 
 import CountriesData from './sample-data/countries.json'
 import { ENUM_NODE } from './enums'
+import { find } from 'lodash'
 
 const parsedJSON = JSON.parse(JSON.stringify(CountriesData))
 export const useStore = create((set, get) => ({
@@ -42,15 +43,18 @@ export const useStore = create((set, get) => ({
 		})
 	},
 
-	addNode: ({ type }) => {
+	addNode: ({ type, fileName = '' }) => {
 		const id = `${type}-${nanoid()}`
-		let data = []
+		let data =  { dataNow: [], previousNodeData: [] };
+
 		if (type === ENUM_NODE.EXAMPLE_DATASET) {
-			data = parsedJSON
+			data.dataNow = parsedJSON;
+		}else if(type === ENUM_NODE.CSV_UPLOAD){
+			data.fileName = fileName;
 		}
 		const newNode = {
 			id: id,
-			data: { dataNow: data, previousNodeData: [] },
+			data: data,
 			previousNode: '',
 			tree: {
 				id: id,
@@ -61,6 +65,16 @@ export const useStore = create((set, get) => ({
 		}
 		set({ nodes: [...get().nodes, newNode] })
 	},
+	updateDataNodeByKeyObj({id, key, data}){
+		const nodes = get().nodes.map(node =>{
+			if(node.id === id){
+				node.data[key] = data;
+			} 
+			return node;
+		})
+		set({nodes: [...nodes]});
+	},
+	
 
 	addEdge: (data) => {
 		const sourceNode = get().nodes.find((node) => node.id === data.source)
