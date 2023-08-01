@@ -1,17 +1,22 @@
+'use client'
 import { shallow } from 'zustand/shallow'
 
 import { ReactFlow, Panel, Background, MiniMap, Controls } from 'reactflow'
-import CsvUploadNode from './Custom Nodes/Input/CsvUploadNode'
-
-import 'reactflow/dist/style.css'
-import './App.css'
-
 
 import React from 'react'
+// import dynamic from 'next/dynamic'
 import { Table } from 'antd'
+import SortNode from '@/components/CustomNodes/Transform/SortNode'
+import FilterNode from '@/components/CustomNodes/Transform/FilterNode'
+import ExampleData from '@/components/CustomNodes/Input/ExampleDataNode'
+import { useStore } from '@/store'
+import CsvUploadNode from '@/components/CustomNodes/Input/CsvUploadNode'
+import { ENUM_NODE } from '@/enums'
+import ButtonAddBlock from '@/components/ButtonAddBlock'
 
-
-const logoImage = require('./resources/images/logo.png')
+// import routeGuard from '@/utils/route-guard'
+// import { withSession } from '@/utils/session-wrapper'
+import 'reactflow/dist/style.css'
 
 const selector = (state) => ({
 	nodes: state.nodes,
@@ -21,21 +26,75 @@ const selector = (state) => ({
 	addEdge: state.addEdge,
 	outputData: state.outputData,
 	addOutputData: state.addOutputData,
-	removeOutputData: state.removeOutputData
+	removeOutputData: state.removeOutputData,
+	addNode: state.addNode
 })
 
 const nodeTypes = {
 	[ENUM_NODE.EXAMPLE_DATASET]: ExampleData,
 	[ENUM_NODE.FILTER]: FilterNode,
 	[ENUM_NODE.SORT]: SortNode,
-	[ENUM_NODE.CSV_UPLOAD]: CsvUploadNode, 
+	[ENUM_NODE.CSV_UPLOAD]: CsvUploadNode
 }
 const nodeOrigin = [0.5, 0.5]
-function App() {
+const Index = () => {
 	const { nodes, edges, onNodesChange, onEdgesChange, addEdge, outputData, addOutputData, removeOutputData } = useStore(
 		selector,
 		shallow
 	)
+
+	/**
+	 * For future feature but not yet implemented : 
+	 */
+
+	//   useEffect(() => {
+	// 	// Add event listeners when the component mounts
+	// 	document.addEventListener('dragover',  (e) => {
+	// 		const dropTarget = document.querySelector(' .react-flow__background');
+	// 		if (dropTarget.closest(' .react-flow__background')) {
+	// 			e.preventDefault()
+	// 			// console.log(e)
+	// 		}
+			
+	 		 
+	// 	});
+	// 	document.addEventListener('drop',  (e) =>{
+	// 		const dropTarget = document.querySelector(' .react-flow__background');
+	// 		if (dropTarget.closest(' .react-flow__background')) {
+	// 			e.preventDefault()
+	// 			console.log(e)
+	// 		}
+			
+	 		 
+	// 	});
+	
+	// 	// Remove event listeners when the component unmounts
+	// 	return () => {
+	// 	  document.removeEventListener('dragover',  (e) => {
+	// 		const dropTarget = document.querySelector(' .react-flow__background');
+	// 		if (dropTarget.closest(' .react-flow__background')) {
+	// 			e.preventDefault()
+	// 		}
+			
+	 		 
+	// 	});
+	// 	  document.removeEventListener('drop',  (e) =>{
+	// 		const dropTarget = document.querySelector(' .react-flow__background');
+	// 		if (dropTarget.closest(' .react-flow__background')) {
+	// 			e.preventDefault()
+	// 			console.log(e)
+	// 		}
+			
+	 		 
+	// 	});
+	// 	};
+	//   }, []);
+	// const onDropBackground = (e)=>{
+	// 	e.preventDefault();
+	// 	const file = e.dataTransfers?.files[0];
+	// 	console.log(e);
+	// 	// addNode({type: ENUM_NODE.CSV_UPLOAD, fileName: file.name});
+	// }
 	const onNodeClick = (e, node) => {
 		console.log('node', node)
 		addOutputData(node.data.dataNow)
@@ -72,7 +131,7 @@ function App() {
 			<div className="header-app-cont">
 				<div className="header-app-cont__left-menu">
 					<a href="#" className="header-app-cont__left-menu__anchor">
-						<img src={logoImage} alt="image-logo" className="header-app-cont__header-app-cont__img-logo" />
+						<img src="/assets/images/logo.png" alt="image-logo" className="header-app-cont__header-app-cont__img-logo" />
 					</a>
 				</div>
 				<div className="header-app-cont__title-app">
@@ -90,6 +149,7 @@ function App() {
 					onConnect={addEdge}
 					onNodeClick={onNodeClick}
 					onPaneClick={onPaneClick}
+				
 					fitView>
 					<Panel position="top-left">
 						<ButtonAddBlock />
@@ -125,5 +185,13 @@ function App() {
 		</div>
 	)
 }
-
-export default App
+export default Index
+// export const getServerSideProps = withSession(async function ({ req, query, ...other }) {
+// 	const access_token = req.session?.auth?.access_token
+// 	const isLoggedIn = !!access_token
+// 	return routeGuard([isLoggedIn], '/login', {
+// 		props: {
+// 			username: req.session?.auth?.username
+// 		}
+// 	})
+// })
