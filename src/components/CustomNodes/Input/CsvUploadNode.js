@@ -1,13 +1,16 @@
 import React, { useRef, useState } from 'react'
 import { Handle, Position } from 'reactflow'
 import { shallow } from 'zustand/shallow'
-import { useStore } from '../../store'
+import { useStore } from store'
 
+<<<<<<< HEAD:src/Custom Nodes/Input/CsvUploadNode.js
 const selector = (state) => ({
 
 	updateNodeByKey: state.updateNodeByKey
 })
 
+=======
+>>>>>>> origin/next-migration:src/components/CustomNodes/Input/CsvUploadNode.js
 function CsvUploadNode({ id, data }) {
 	const { updateNodeByKey } = useStore(
 		selector,
@@ -41,7 +44,6 @@ function CsvUploadNode({ id, data }) {
 		const file = e.dataTransfer.files[0]
 		setFile(file)
 	}
-	
 
 	const handleFileInputChange = (e) => {
 		setFile(file)
@@ -60,6 +62,7 @@ function CsvUploadNode({ id, data }) {
 					<div className="close">X</div>
 				</div>
 				<div className="input-file-node__input-file-cont">
+<<<<<<< HEAD:src/Custom Nodes/Input/CsvUploadNode.js
 				{!file ? (
 					<>
 					<div className="input-file-cont__drop-and-file-dialog-cont">
@@ -86,6 +89,9 @@ function CsvUploadNode({ id, data }) {
 					<p>{file?.name || data?.fileName}</p>
 				)}
 					</div>
+=======
+				</div>
+>>>>>>> origin/next-migration:src/components/CustomNodes/Input/CsvUploadNode.js
 			</div>
 			<Handle
 				className="handle__input-file-node handle-right-custom-node"

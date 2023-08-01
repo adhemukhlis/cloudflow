@@ -1,11 +1,12 @@
 import { Button, Modal, Row, Col, Input, Divider, Card, Typography, Badge, Alert } from 'antd'
 import React, { useState } from 'react'
-import { IconGrid_2Plus, IconPlus } from '../icons'
-import { ENUM_NODE } from '@/src/enums'
 import { uniq } from 'lodash'
 import { upper } from 'case'
 import { shallow } from 'zustand/shallow'
-import { useStore } from '../../store'
+
+import { IconGrid_2Plus, IconPlus } from '../icons'
+import { useStore } from '@/store'
+import { ENUM_NODE } from '@/enums'
 const { Search } = Input
 const { Text, Paragraph } = Typography
 const BLOCK_LIST = [
@@ -44,18 +45,14 @@ const BLOCK_LIST = [
 		description: 'Handle CSV files',
 		inputTypes: ['-'],
 		outputTypes: ['dataset']
-	},
-
-
-	
+	}
 ]
 const BLOCK_CATEGORY = uniq(BLOCK_LIST.map((item) => item.type)).map((item) => ({ value: item, label: upper(item) }))
 const selector = (state) => ({
 	addNode: state.addNode
 })
 const ButtonAddBlock = () => {
-	const { nodes, edges, onNodesChange, onEdgesChange, addEdge, addNode, outputData, addOutputData, removeOutputData } =
-		useStore(selector, shallow)
+	const { addNode } = useStore(selector, shallow)
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [selectedCategory, setSelectedCategory] = useState(undefined)
 	const [blockList, setBlockList] = useState(BLOCK_LIST || [])
@@ -137,8 +134,6 @@ const ButtonAddBlock = () => {
 								))}
 							</Row>
 						))}
-						{/* <Divider orientation="left">Left Text</Divider>
-            {JSON.stringify(groupingBlocks)} */}
 					</Col>
 				</Row>
 			</Modal>

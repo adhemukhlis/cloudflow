@@ -1,5 +1,4 @@
 :root {
-		
 	/*** 
 	 *
 	 * Dark Mode
@@ -12,27 +11,27 @@
 	/* --white-text-clr: #fff; */
 	/* --btn-run-clr: #333248; */
 	/* --btn-run-hover-clr: #403f69; */
-	
+
 	/*** 
 	 *
 	 * Light Mode
 	*/
 	--primary-clr: #fffff;
-	--node-clr: #F7F8F9;
-	--node-input-drag-enter-clr: #f2f2f2;;
-	--outline-clr: #B3B9C4;
+	--node-clr: #f7f8f9;
+	--node-input-drag-enter-clr: #f2f2f2;
+	--outline-clr: #b3b9c4;
 	--bg-overlay-clr: #222138;
 	--bg-block-item-clr: #333154;
 	--outline-node-clr-hover: #7371b5;
 	--outline-input-clr: rgba(255, 255, 255, 0.19);
-	--handle-clr: #DCDFE4;
-	--handle-hover-or-active-clr: #e7e8ec;;
-	--light-mode-text-clr: #091E42;
+	--handle-clr: #dcdfe4;
+	--handle-hover-or-active-clr: #e7e8ec;
+	--light-mode-text-clr: #091e42;
 	--li-overlay-active-clr: #ff0072;
 	--block-item-sub-title-clr: #c5cbd2;
 	--block-item-input-output-text-clr: #9ca8b3;
-	--btn-run-clr: 	#e8e8e8;
-	--btn-run-hover-clr: #DCDFE4;
+	--btn-run-clr: #e8e8e8;
+	--btn-run-hover-clr: #dcdfe4;
 }
 
 *,
@@ -52,6 +51,10 @@ body {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+		'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .app {
@@ -339,7 +342,6 @@ body {
 	outline: 1px solid var(--outline-clr);
 }
 
-
 .select-inside-node {
 	font-size: 0.7rem;
 	display: block;
@@ -407,48 +409,41 @@ body {
 	background-color: var(--btn-run-hover-clr);
 }
 
-
 /*
 	NODE STYLING - CSV UPLOAD NODE - START
 */
 
-.input-file-node .detail-node.active{
+.input-file-node .detail-node.active {
 	/* display: none; */
 	background-color: var(--node-input-drag-enter-clr);
 }
-.input-file-node__input-file-cont{
+.input-file-node__input-file-cont {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	padding: 10px;
 }
-.input-file-cont__drop-and-file-dialog-cont{
+.input-file-cont__drop-and-file-dialog-cont {
 	display: flex;
 	align-items: center;
 	gap: 5px;
 	margin-bottom: 10px;
 }
 
-.drop-and-file-dialog-cont__drop-file-text{
-	font-size: .8rem;
+.drop-and-file-dialog-cont__drop-file-text {
+	font-size: 0.8rem;
 }
-.drop-and-file-dialog-cont__open-file-dialog-btn{
-	font-size:.8rem;
+.drop-and-file-dialog-cont__open-file-dialog-btn {
+	font-size: 0.8rem;
 	border: none;
 	background-color: var(--handle-clr);
 	color: var(--light-mode-text-clr);
-	padding:10px;
+	padding: 10px;
 }
 
-
-
-
-.input-file-cont__input-el{
+.input-file-cont__input-el {
 	display: none;
 }
-
-
-
 
 /** 
 	NODE STYLING - END 

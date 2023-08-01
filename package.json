@@ -4,20 +4,19 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
     "antd": "^5.7.3",
     "axios": "^1.4.0",
     "case": "^1.6.3",
     "csv-parse": "^5.4.0",
     "dayjs": "^1.11.9",
+    "eslint-config-next": "^13.4.12",
+    "iron-session": "^6.3.1",
     "lodash": "^4.17.21",
     "nanoid": "^4.0.2",
+    "next": "^13.4.11",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-inlinesvg": "^3.0.2",
-    "react-router-dom": "^6.14.2",
     "react-scripts": "^5.0.1",
     "reactflow": "^11.7.4",
     "web-vitals": "^3.4.0",
@@ -36,26 +35,30 @@
     "zustand": "^4.3.9"
   },
   "devDependencies": {
-    "babel-plugin-import": "^1.13.8",
-    "babel-plugin-module-resolver": "^5.0.0",
-    "customize-cra": "^1.0.0",
-    "eslint": "^8.45.0",
-    "eslint-plugin-react": "^7.33.0",
+    "@ant-design/cssinjs": "^1.16.1",
+    "env-cmd": "^10.1.0",
+    "eslint": "^8.46.0",
+    "eslint-config-next": "^13.4.9",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-unicorn": "^48.0.1",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.0.0",
-    "react-app-rewired": "^2.2.1",
     "yarn-upgrade-all": "^0.7.2"
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dependencies-upgrade": "yarn yarn-upgrade-all",
-    "prettier:src": "npx prettier --config .prettierrc --write ./src"
+    "dev:windows": "npx env-cmd -x next dev -p $PORT",
+    "dev": "npx env-cmd -x next dev -p '$PORT'",
+    "build": "next build",
+    "start": "npx env-cmd -x next start -p '$PORT'",
+    "lint": "next lint",
+    "prettier-all": "npx prettier --config .prettierrc --write ./src",
+    "fix": "npx eslint --fix ./src --ext .js --ext .jsx",
+    "dependencies-upgrade": "yarn yarn-upgrade-all"
   },
   "yarn-upgrade-all": {
     "ignore": [
       "react",
+      "next",
       "react-dom"
     ]
   },

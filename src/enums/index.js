@@ -3,5 +3,5 @@ export const ENUM_NODE = {
 	DATASET: 'node-dataset',
 	FILTER: 'node-filter',
 	SORT: 'node-sort',
-	CSV_UPLOAD: 'node-csv-upload',
+	CSV_UPLOAD: 'node-csv-upload'
 }

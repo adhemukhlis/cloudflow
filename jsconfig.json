@@ -1,9 +1,8 @@
 {
 	"compilerOptions": {
-		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./*"]
+			"@/*": ["./src/*"]
 		}
 	},
-	"exclude": ["node_modules", "build"]
+	"exclude": ["./out/**/*", "./node_modules/**/*", "cypress/**/*.ts","./next"]
 }
