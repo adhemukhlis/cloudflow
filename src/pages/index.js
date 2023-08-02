@@ -14,8 +14,8 @@ import CsvUploadNode from '@/components/CustomNodes/Input/CsvUploadNode'
 import { ENUM_NODE } from '@/enums'
 import ButtonAddBlock from '@/components/ButtonAddBlock'
 
-// import routeGuard from '@/utils/route-guard'
-// import { withSession } from '@/utils/session-wrapper'
+import routeGuard from '@/utils/route-guard'
+import { withSession } from '@/utils/session-wrapper'
 import 'reactflow/dist/style.css'
 
 const selector = (state) => ({
@@ -44,7 +44,7 @@ const Index = () => {
 	)
 
 	/**
-	 * For future feature but not yet implemented : 
+	 * For future feature but not yet implemented :
 	 */
 
 	//   useEffect(() => {
@@ -55,8 +55,7 @@ const Index = () => {
 	// 			e.preventDefault()
 	// 			// console.log(e)
 	// 		}
-			
-	 		 
+
 	// 	});
 	// 	document.addEventListener('drop',  (e) =>{
 	// 		const dropTarget = document.querySelector(' .react-flow__background');
@@ -64,10 +63,9 @@ const Index = () => {
 	// 			e.preventDefault()
 	// 			console.log(e)
 	// 		}
-			
-	 		 
+
 	// 	});
-	
+
 	// 	// Remove event listeners when the component unmounts
 	// 	return () => {
 	// 	  document.removeEventListener('dragover',  (e) => {
@@ -75,8 +73,7 @@ const Index = () => {
 	// 		if (dropTarget.closest(' .react-flow__background')) {
 	// 			e.preventDefault()
 	// 		}
-			
-	 		 
+
 	// 	});
 	// 	  document.removeEventListener('drop',  (e) =>{
 	// 		const dropTarget = document.querySelector(' .react-flow__background');
@@ -84,8 +81,7 @@ const Index = () => {
 	// 			e.preventDefault()
 	// 			console.log(e)
 	// 		}
-			
-	 		 
+
 	// 	});
 	// 	};
 	//   }, []);
@@ -149,7 +145,6 @@ const Index = () => {
 					onConnect={addEdge}
 					onNodeClick={onNodeClick}
 					onPaneClick={onPaneClick}
-				
 					fitView>
 					<Panel position="top-left">
 						<ButtonAddBlock />
@@ -186,12 +181,10 @@ const Index = () => {
 	)
 }
 export default Index
-// export const getServerSideProps = withSession(async function ({ req, query, ...other }) {
-// 	const access_token = req.session?.auth?.access_token
-// 	const isLoggedIn = !!access_token
-// 	return routeGuard([isLoggedIn], '/login', {
-// 		props: {
-// 			username: req.session?.auth?.username
-// 		}
-// 	})
-// })
+export const getServerSideProps = withSession(async function ({ req, query, ...other }) {
+	const access_token = req.session?.auth?.access_token
+	const isLoggedIn = !!access_token
+	return routeGuard([isLoggedIn], '/login', {
+		props: {}
+	})
+})
