@@ -5,8 +5,8 @@ import { ReactFlow, Panel, Background, MiniMap, Controls } from 'reactflow'
 import axios from 'axios'
 import React from 'react'
 import { useRouter } from 'next/router'
-// import dynamic from 'next/dynamic'
-import { Button, Table, message } from 'antd'
+import Split from '@uiw/react-split'
+import { Button, Table, Typography, message } from 'antd'
 import SortNode from '@/components/CustomNodes/Transform/SortNode'
 import FilterNode from '@/components/CustomNodes/Transform/FilterNode'
 import ExampleData from '@/components/CustomNodes/Input/ExampleDataNode'
@@ -19,7 +19,7 @@ import routeGuard from '@/utils/route-guard'
 import { withSession } from '@/utils/session-wrapper'
 import 'reactflow/dist/style.css'
 import asyncLocalStorage from '@/utils/async-local-storage'
-
+const { Text } = Typography
 const selector = (state) => ({
 	nodes: state.nodes,
 	edges: state.edges,
@@ -148,49 +148,51 @@ const Index = () => {
 				</div>
 				<Button onClick={handleLogout}>Logout</Button>
 			</div>
-			<div className="reactflow-cont">
-				<ReactFlow
-					nodes={nodes}
-					edges={edges}
-					onNodesChange={onNodesChange}
-					onEdgesChange={onEdgesChange}
-					nodeTypes={nodeTypes}
-					nodeOrigin={nodeOrigin}
-					onConnect={addEdge}
-					onNodeClick={onNodeClick}
-					onPaneClick={onPaneClick}
-					fitView>
-					<Panel position="top-left">
-						<ButtonAddBlock />
-					</Panel>
-					<Background />
-					<MiniMap className="" maskColor="#F1F2F4" nodeColor="#DCDFE4" />
-					<Controls style={{ backgroundColor: '#F7F8F9' }} />
-				</ReactFlow>
-			</div>
-			<div className="output-logs-cont">
-				<div className="output-logs-cont__output-cont">
-					<h5 className="output-logs-cont__output-cont__title output-logs-title">OUTPUT</h5>
-					<div className="output-logs-cont__output-cont__output">
-						{outputData?.length !== 0 ? (
-							<Table
-								rowKey="country"
-								dataSource={outputData}
-								columns={columns}
-								pagination={{ position: ['none'] }}
-								scroll={{
-									y: 240
-								}}
-							/>
-						) : (
-							<></>
-						)}
-					</div>
+			<Split mode="vertical" style={{ flex: 1, border: '1px solid #d5d5d5', borderRadius: 3 }}>
+				<div style={{ height: '50%' }}>
+					<ReactFlow
+						nodes={nodes}
+						edges={edges}
+						onNodesChange={onNodesChange}
+						onEdgesChange={onEdgesChange}
+						nodeTypes={nodeTypes}
+						nodeOrigin={nodeOrigin}
+						onConnect={addEdge}
+						onNodeClick={onNodeClick}
+						onPaneClick={onPaneClick}
+						fitView>
+						<Panel position="top-left">
+							<ButtonAddBlock />
+						</Panel>
+						<Background />
+						<MiniMap className="" maskColor="#F1F2F4" nodeColor="#DCDFE4" />
+						<Controls style={{ backgroundColor: '#F7F8F9' }} />
+					</ReactFlow>
 				</div>
-				<div className="output-logs-cont__logs-cont">
-					<h5 className="output-logs-cont__output-cont__title output-logs-title">LOGS</h5>
+				<div style={{ height: '50%', display: 'flex' }}>
+					<Split style={{ flex: 1 }}>
+						<div
+							style={{ display: 'flex', flexDirection: 'column', minWidth: 200, padding: '0.6rem', paddingBottom: '4rem' }}>
+							<div>
+								<Text strong>Output</Text>
+							</div>
+							<div style={{ overflow: 'scroll' }}>
+								{outputData?.length !== 0 ? (
+									<Table rowKey="country" dataSource={outputData} columns={columns} pagination={false} />
+								) : (
+									<></>
+								)}
+							</div>
+						</div>
+						<div style={{ minWidth: 80, flex: 1, padding: '0.6rem', paddingBottom: '4rem' }}>
+							<div>
+								<Text strong>Logs</Text>
+							</div>
+							<div style={{ overflow: 'scroll' }}>{/* logs here */}</div>
+						</div>
+					</Split>
 				</div>
-			</div>
+			</Split>
 		</div>
 	)
 }
