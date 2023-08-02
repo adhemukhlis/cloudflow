@@ -2,10 +2,11 @@
 import { shallow } from 'zustand/shallow'
 
 import { ReactFlow, Panel, Background, MiniMap, Controls } from 'reactflow'
-
+import axios from 'axios'
 import React from 'react'
+import { useRouter } from 'next/router'
 // import dynamic from 'next/dynamic'
-import { Table } from 'antd'
+import { Button, Table, message } from 'antd'
 import SortNode from '@/components/CustomNodes/Transform/SortNode'
 import FilterNode from '@/components/CustomNodes/Transform/FilterNode'
 import ExampleData from '@/components/CustomNodes/Input/ExampleDataNode'
@@ -17,6 +18,7 @@ import ButtonAddBlock from '@/components/ButtonAddBlock'
 import routeGuard from '@/utils/route-guard'
 import { withSession } from '@/utils/session-wrapper'
 import 'reactflow/dist/style.css'
+import asyncLocalStorage from '@/utils/async-local-storage'
 
 const selector = (state) => ({
 	nodes: state.nodes,
@@ -38,6 +40,7 @@ const nodeTypes = {
 }
 const nodeOrigin = [0.5, 0.5]
 const Index = () => {
+	const router = useRouter()
 	const { nodes, edges, onNodesChange, onEdgesChange, addEdge, outputData, addOutputData, removeOutputData } = useStore(
 		selector,
 		shallow
@@ -99,6 +102,16 @@ const Index = () => {
 	const onPaneClick = () => {
 		removeOutputData()
 	}
+	const handleLogout = async () => {
+		return await axios.request({ method: 'post', url: '/api/auth/logout' }).then((res) => {
+			message.info(res.data)
+			asyncLocalStorage.setItem('_am', '').then(() => {
+				setTimeout(() => {
+					router.push('/login')
+				}, 1200)
+			})
+		})
+	}
 
 	const columns = [
 		{
@@ -133,6 +146,7 @@ const Index = () => {
 				<div className="header-app-cont__title-app">
 					<h4 className="title__title-app">Cloud Flow</h4>
 				</div>
+				<Button onClick={handleLogout}>Logout</Button>
 			</div>
 			<div className="reactflow-cont">
 				<ReactFlow
